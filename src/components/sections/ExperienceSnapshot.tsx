@@ -1,74 +1,52 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Briefcase } from "lucide-react";
-import Reveal from "../Reveal";
+import { ArrowUpRight } from "lucide-react";
 import { experience } from "@/data/portfolio";
+import Paren from "@/components/Paren";
+import Reveal from "@/components/Reveal";
 
 const ExperienceSnapshot = () => {
   return (
-    <section className="container relative py-24 sm:py-32">
-      <Reveal>
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">
-              03 — Experience
-            </p>
-            <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-              <span className="text-gradient-soft">A journey of</span>{" "}
-              <span className="text-gradient">building.</span>
+    <section className="py-24 md:py-32 border-t border-foreground/15">
+      <div className="container-editorial">
+        <div className="grid md:grid-cols-12 gap-10 mb-14 md:mb-20">
+          <div className="md:col-span-4">
+            <Paren>04 — Experience</Paren>
+          </div>
+          <div className="md:col-span-8">
+            <h2 className="h-section text-balance">
+              Five years<br />
+              <span className="italic">in the field</span>.
             </h2>
           </div>
-          <Link
-            to="/experience"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Full timeline
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </Link>
         </div>
-      </Reveal>
 
-      <div className="relative mt-14">
-        {/* timeline line */}
-        <div
-          aria-hidden
-          className="absolute left-5 top-2 bottom-2 w-px md:left-1/2"
-          style={{
-            background:
-              "linear-gradient(180deg, transparent, hsl(var(--primary) / 0.6), hsl(var(--secondary) / 0.6), transparent)",
-          }}
-        />
-
-        <div className="space-y-8">
+        <ul className="divide-y divide-foreground/15 border-y border-foreground/15">
           {experience.map((e, i) => (
-            <Reveal key={`${e.company}-${e.role}`} delay={i * 0.08}>
-              <div
-                className={`relative grid gap-6 md:grid-cols-2 ${
-                  i % 2 === 0 ? "" : "md:[&>*:first-child]:order-2"
-                }`}
-              >
-                {/* dot */}
-                <div className="absolute left-5 top-6 h-3 w-3 -translate-x-1/2 rounded-full bg-gradient-tri shadow-glow md:left-1/2" />
-
-                <div className="glass glow-border ml-12 rounded-2xl p-6 md:ml-0 md:mr-8 md:[&]:has-data-side='right']:ml-8">
-                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-secondary">
-                    <Briefcase size={12} />
-                    {e.period}
-                  </div>
-                  <h3 className="mt-2 font-display text-xl font-semibold">{e.role}</h3>
-                  <p className="text-sm text-gradient font-medium">{e.company} · {e.location}</p>
-                  <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-                    {e.points.slice(0, 2).map((p) => (
-                      <li key={p} className="flex gap-2">
-                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-secondary" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
+            <Reveal key={i} delay={i * 0.04}>
+              <li className="grid md:grid-cols-12 gap-4 md:gap-8 py-8 md:py-10">
+                <span className="md:col-span-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  ( 0{i + 1} ) {e.period}
+                </span>
+                <div className="md:col-span-6">
+                  <h3 className="font-display text-3xl md:text-4xl font-light leading-none tracking-tight">
+                    {e.role}
+                  </h3>
+                  <p className="text-foreground/70 mt-2">
+                    {e.company} <span className="opacity-50">— {e.location}</span>
+                  </p>
                 </div>
-                <div className="hidden md:block" />
-              </div>
+                <p className="md:col-span-4 text-foreground/70 text-base self-center">
+                  {e.summary}
+                </p>
+              </li>
             </Reveal>
           ))}
+        </ul>
+
+        <div className="mt-10">
+          <Link to="/experience" className="group inline-flex items-center gap-2 text-sm border-b border-foreground pb-1">
+            Full experience <ArrowUpRight className="size-4 arrow-shift" />
+          </Link>
         </div>
       </div>
     </section>

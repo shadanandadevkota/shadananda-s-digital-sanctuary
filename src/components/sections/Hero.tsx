@@ -1,107 +1,57 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowRight, Mail, Sparkles } from "lucide-react";
-import Hero3D from "../Hero3D";
+import { ArrowUpRight } from "lucide-react";
+import portrait from "@/assets/shadananda.jpg";
+import { profile } from "@/data/portfolio";
+import Paren from "@/components/Paren";
 
 const Hero = () => {
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-32">
-      {/* grid bg */}
-      <div aria-hidden className="absolute inset-0 grid-bg opacity-40" />
-      {/* radial glow */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-[600px]"
-        style={{ background: "var(--gradient-radial)" }}
-      />
+    <section className="relative pt-32 md:pt-40 pb-16 md:pb-24">
+      <div className="container-editorial">
+        <div className="flex items-start justify-between gap-6 mb-10 md:mb-16">
+          <Paren>01 — Index / Introducing</Paren>
+          <Paren className="hidden md:inline">{profile.location}</Paren>
+        </div>
 
-      <div className="container relative z-10">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground"
-            >
-              <Sparkles size={12} className="text-secondary" />
-              Available for freelance & full-time roles
-            </motion.div>
+        <h1 className="h-display text-balance">
+          Quietly <span className="italic font-normal">premium</span><br />
+          digital products,<br />
+          built end-to-end<span className="text-accent">.</span>
+        </h1>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
-            >
-              <span className="text-gradient-soft">Full-Stack Developer</span>
-              <br />
-              <span className="text-gradient">Crafting Modern</span>
-              <br />
-              <span className="text-gradient-soft">Digital Experiences</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25 }}
-              className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
-            >
-              I'm <span className="font-medium text-foreground">Shadananda Devkota</span> — a
-              web & mobile app developer and UI/UX designer based in Pokhara, Nepal.
-              I build elegant, scalable products that feel as good as they look.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-8 flex flex-wrap items-center gap-3"
-            >
-              <Link
-                to="/projects"
-                className="group inline-flex items-center gap-2 rounded-xl bg-gradient-tri px-6 py-3 text-sm font-semibold text-white shadow-glow transition-transform hover:scale-105"
-              >
-                View Projects
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                to="/contact"
-                className="glass glow-border inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-foreground transition-transform hover:scale-105"
-              >
-                <Mail size={16} />
-                Contact Me
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="mt-12 flex items-center gap-8 border-t border-border/50 pt-6"
-            >
-              {[
-                { v: "3+", l: "Years" },
-                { v: "20+", l: "Projects" },
-                { v: "100%", l: "Client Focus" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <div className="font-display text-2xl font-bold text-gradient">{s.v}</div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">{s.l}</div>
-                </div>
-              ))}
-            </motion.div>
+        <div className="mt-12 md:mt-20 grid md:grid-cols-12 gap-8 md:gap-12 items-end">
+          <div className="md:col-span-5">
+            <div className="overflow-hidden img-zoom rounded-sm">
+              <img
+                src={portrait}
+                width={1024}
+                height={1280}
+                alt="Portrait of Shadananda Devkota"
+                className="w-full h-auto block"
+              />
+            </div>
+            <p className="mt-4 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+              ( 01 ) — Shadananda Devkota
+            </p>
           </div>
 
-          {/* 3D side */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="relative h-[420px] sm:h-[520px] lg:h-[600px]"
-          >
-            <Hero3D />
-          </motion.div>
+          <div className="md:col-span-6 md:col-start-7 md:pb-2">
+            <p className="font-display text-2xl md:text-3xl leading-snug font-light text-balance">
+              I&apos;m a full-stack developer and product designer crafting
+              <span className="italic"> calm, fast, premium </span>
+              digital experiences for founders and studios worldwide.
+            </p>
+
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Link to="/projects" className="group inline-flex items-center gap-2 text-base border-b border-foreground pb-1">
+                See selected work
+                <ArrowUpRight className="size-4 arrow-shift" />
+              </Link>
+              <Link to="/contact" className="group inline-flex items-center gap-2 text-base text-foreground/70 hover:text-foreground transition-colors">
+                Start a project →
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>

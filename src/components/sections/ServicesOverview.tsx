@@ -1,75 +1,53 @@
 import { Link } from "react-router-dom";
-import { Code2, Smartphone, Palette, Zap, ArrowRight } from "lucide-react";
-import Reveal from "../Reveal";
+import { ArrowUpRight } from "lucide-react";
 import { services } from "@/data/portfolio";
-
-const iconMap = { Code2, Smartphone, Palette, Zap } as const;
+import Paren from "@/components/Paren";
+import Reveal from "@/components/Reveal";
 
 const ServicesOverview = () => {
   return (
-    <section className="container relative py-24 sm:py-32">
-      <Reveal>
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">
-            05 — Services
-          </p>
-          <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            <span className="text-gradient-soft">What I can</span>{" "}
-            <span className="text-gradient">build for you.</span>
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            From idea to launch — design, code, and everything in between.
-          </p>
+    <section className="py-24 md:py-32 border-t border-foreground/15">
+      <div className="container-editorial">
+        <div className="grid md:grid-cols-12 gap-10 mb-14 md:mb-20">
+          <div className="md:col-span-4">
+            <Paren>06 — Services</Paren>
+          </div>
+          <div className="md:col-span-8">
+            <h2 className="h-section text-balance">
+              How we&apos;ll<br />
+              <span className="italic">work together</span>.
+            </h2>
+          </div>
         </div>
-      </Reveal>
 
-      <div className="mt-14 grid gap-5 md:grid-cols-2">
-        {services.map((s, i) => {
-          const Icon = iconMap[s.icon as keyof typeof iconMap] ?? Code2;
-          return (
-            <Reveal key={s.title} delay={i * 0.08}>
-              <div className="glass glow-border group relative h-full overflow-hidden rounded-3xl p-7 transition-shadow hover:shadow-elegant">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-0 blur-3xl transition-opacity group-hover:opacity-60"
-                  style={{ background: "var(--gradient-primary)" }}
-                />
-                <div className="relative">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-tri/20 text-secondary">
-                    <Icon size={22} />
+        <ul className="divide-y divide-foreground/15 border-y border-foreground/15">
+          {services.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <Reveal key={s.title} delay={i * 0.04}>
+                <li className="group grid md:grid-cols-12 gap-4 md:gap-8 py-8 md:py-12 transition-colors hover:bg-foreground/[0.02]">
+                  <span className="md:col-span-1 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                    ( 0{i + 1} )
+                  </span>
+                  <div className="md:col-span-4 flex items-start gap-4">
+                    <Icon className="size-5 mt-2 text-foreground/60" strokeWidth={1.5} />
+                    <div>
+                      <h3 className="font-display text-3xl md:text-4xl font-light leading-none tracking-tight">{s.title}</h3>
+                      <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mt-2">{s.short}</p>
+                    </div>
                   </div>
-                  <h3 className="mt-5 font-display text-2xl font-semibold leading-tight">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {s.description}
-                  </p>
-                  <ul className="mt-5 grid grid-cols-2 gap-2">
-                    {s.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span className="h-1 w-1 rounded-full bg-gradient-tri" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Reveal>
-          );
-        })}
+                  <p className="md:col-span-5 text-foreground/70 text-base self-center">{s.description}</p>
+                  <div className="md:col-span-2 flex md:justify-end items-center">
+                    <Link to="/services" className="inline-flex items-center gap-2 text-sm border-b border-foreground pb-0.5">
+                      Detail <ArrowUpRight className="size-4 arrow-shift" />
+                    </Link>
+                  </div>
+                </li>
+              </Reveal>
+            );
+          })}
+        </ul>
       </div>
-
-      <Reveal>
-        <div className="mt-10 text-center">
-          <Link
-            to="/services"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Explore all services
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
-      </Reveal>
     </section>
   );
 };
