@@ -1,16 +1,58 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Hero from "@/components/sections/Hero";
+import SkillsPreview from "@/components/sections/SkillsPreview";
+import FeaturedProjects from "@/components/sections/FeaturedProjects";
+import ExperienceSnapshot from "@/components/sections/ExperienceSnapshot";
+import CertificatesPreview from "@/components/sections/CertificatesPreview";
+import ServicesOverview from "@/components/sections/ServicesOverview";
+import CallToAction from "@/components/sections/CallToAction";
+import { useEffect } from "react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  useEffect(() => {
+    document.title = "Shadananda Devkota — Full-Stack Developer & UI/UX Designer";
+    const meta = document.querySelector('meta[name="description"]');
+    meta?.setAttribute(
+      "content",
+      "Portfolio of Shadananda Devkota — full-stack web & mobile developer, UI/UX designer, and freelancer crafting modern digital experiences."
+    );
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <>
+      {/* Structured data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Shadananda Devkota",
+            jobTitle: "Full-Stack Web & Mobile App Developer",
+            email: "shadanandadevkota@gmail.com",
+            telephone: "+9779861015671",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Pokhara",
+              addressRegion: "Gandaki",
+              addressCountry: "Nepal",
+            },
+          }),
+        }}
+      />
+
+      <h1 className="sr-only">
+        Shadananda Devkota — Full-Stack Web & Mobile App Developer, UI/UX Designer and Freelancer
+      </h1>
+
+      <Hero />
+      <SkillsPreview />
+      <FeaturedProjects />
+      <ExperienceSnapshot />
+      <CertificatesPreview />
+      <ServicesOverview />
+      <CallToAction />
+    </>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
