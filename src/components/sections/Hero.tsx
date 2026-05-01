@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, Sparkles } from "lucide-react";
-import Hero3D from "./Hero3D";
+import Hero3D from "../Hero3D";
 
 const Hero = () => {
   return (
