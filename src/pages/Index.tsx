@@ -40,9 +40,6 @@ const Index = () => {
         }}
       />
 
-      <h1 className="sr-only">
-        Shadananda Devkota — Full-Stack Web & Mobile App Developer, UI/UX Designer and Freelancer
-      </h1>
 
       <Hero />
       <SkillsPreview />

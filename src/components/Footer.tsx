@@ -1,110 +1,55 @@
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return (
-    <footer className="relative z-10 mt-32 border-t border-border/50">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-px h-px"
-        style={{ background: "var(--gradient-tri)", opacity: 0.6 }}
-      />
-      <div className="container py-16">
-        <div className="grid gap-12 md:grid-cols-4">
-          <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="relative h-9 w-9 overflow-hidden rounded-xl bg-gradient-tri p-[1.5px]">
-                <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-background font-display text-lg font-bold text-gradient">
-                  S
-                </div>
-              </div>
-              <span className="font-display text-base font-semibold">
-                Shadananda Devkota
-              </span>
-            </Link>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Full-Stack Web & Mobile App Developer crafting modern,
-              performant digital experiences from Pokhara, Nepal.
-            </p>
-            <div className="mt-6 flex gap-3">
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-                className="glass flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-all hover:scale-110 hover:text-foreground hover:shadow-glow"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href="https://linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="glass flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-all hover:scale-110 hover:text-foreground hover:shadow-glow-cyan"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href="mailto:shadanandadevkota@gmail.com"
-                aria-label="Email"
-                className="glass flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-all hover:scale-110 hover:text-foreground hover:shadow-glow-pink"
-              >
-                <Mail size={18} />
-              </a>
+    <footer className="ink-section mt-32">
+      <div className="container-editorial pt-24 pb-10">
+        <div className="grid md:grid-cols-12 gap-10 md:gap-6 items-end">
+          <div className="md:col-span-8">
+            <p className="font-mono uppercase tracking-[0.2em] text-xs opacity-60 mb-6">( Let&apos;s build )</p>
+            <h2 className="font-display font-light leading-[0.95] text-[clamp(2.75rem,8vw,7.5rem)] tracking-tight text-balance">
+              Have an idea?<br />
+              <span className="italic opacity-80">Let&apos;s ship it.</span>
+            </h2>
+            <a
+              href="mailto:hello@shadananda.dev"
+              className="group mt-10 inline-flex items-center gap-3 text-lg md:text-xl border-b border-current pb-1"
+            >
+              hello@shadananda.dev
+              <ArrowUpRight className="size-5 arrow-shift" />
+            </a>
+          </div>
+          <div className="md:col-span-4 grid grid-cols-2 gap-8 text-sm">
+            <div>
+              <p className="font-mono uppercase tracking-[0.2em] text-xs opacity-60 mb-4">( Menu )</p>
+              <ul className="space-y-2">
+                <li><Link to="/" className="hover:opacity-100 opacity-80">Index</Link></li>
+                <li><Link to="/projects" className="hover:opacity-100 opacity-80">Work</Link></li>
+                <li><Link to="/services" className="hover:opacity-100 opacity-80">Services</Link></li>
+                <li><Link to="/about" className="hover:opacity-100 opacity-80">About</Link></li>
+                <li><Link to="/contact" className="hover:opacity-100 opacity-80">Contact</Link></li>
+              </ul>
             </div>
-          </div>
-
-          <div>
-            <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
-              Navigate
-            </h4>
-            <ul className="mt-4 space-y-2 text-sm">
-              {[
-                ["About", "/about"],
-                ["Projects", "/projects"],
-                ["Experience", "/experience"],
-                ["Services", "/services"],
-                ["Contact", "/contact"],
-              ].map(([label, to]) => (
-                <li key={to}>
-                  <Link
-                    to={to}
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
-              Get in touch
-            </h4>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <Mail size={14} className="mt-0.5 shrink-0 text-secondary" />
-                <a href="mailto:shadanandadevkota@gmail.com" className="hover:text-foreground">
-                  shadanandadevkota@gmail.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2">
-                <Phone size={14} className="mt-0.5 shrink-0 text-secondary" />
-                <span>+977 9861015671</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin size={14} className="mt-0.5 shrink-0 text-secondary" />
-                <span>Pokhara, Gandaki, Nepal</span>
-              </li>
-            </ul>
+            <div>
+              <p className="font-mono uppercase tracking-[0.2em] text-xs opacity-60 mb-4">( Social )</p>
+              <ul className="space-y-2">
+                <li><a href="https://github.com/shadananda" target="_blank" rel="noreferrer" className="opacity-80 hover:opacity-100">GitHub</a></li>
+                <li><a href="https://linkedin.com/in/shadananda" target="_blank" rel="noreferrer" className="opacity-80 hover:opacity-100">LinkedIn</a></li>
+                <li><a href="https://twitter.com/shadananda" target="_blank" rel="noreferrer" className="opacity-80 hover:opacity-100">Twitter</a></li>
+                <li><a href="https://instagram.com/shadananda" target="_blank" rel="noreferrer" className="opacity-80 hover:opacity-100">Instagram</a></li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border/50 pt-6 text-xs text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} Shadananda Devkota. All rights reserved.</p>
-          <p className="font-mono">Crafted with precision · v1.0</p>
+        <div className="mt-20 pt-6 border-t border-white/15 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-mono uppercase tracking-widest opacity-70">
+          <p>© {year} Shadananda Devkota — All rights reserved</p>
+          <p>Crafted with care · Kathmandu → World</p>
+          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="hover:opacity-100">
+            Back to top ↑
+          </button>
         </div>
       </div>
     </footer>

@@ -13,7 +13,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["'Space Grotesk'", "Inter", "sans-serif"],
+        display: ["Fraunces", "'Times New Roman'", "serif"],
+        serif: ["Fraunces", "'Times New Roman'", "serif"],
         mono: ["'JetBrains Mono'", "ui-monospace", "monospace"],
       },
       colors: {
@@ -62,19 +63,8 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
-      backgroundImage: {
-        "gradient-primary": "var(--gradient-primary)",
-        "gradient-tri": "var(--gradient-tri)",
-        "gradient-radial": "var(--gradient-radial)",
-        "gradient-mesh": "var(--gradient-mesh)",
-        "gradient-text": "var(--gradient-text)",
-      },
       boxShadow: {
-        glow: "var(--glow-primary)",
-        "glow-cyan": "var(--glow-secondary)",
-        "glow-pink": "var(--glow-accent)",
-        elegant: "var(--shadow-elegant)",
-        soft: "var(--shadow-soft)",
+        soft: "0 30px 80px -40px hsl(0 0% 0% / 0.25)",
       },
       borderRadius: {
         lg: "var(--radius)",

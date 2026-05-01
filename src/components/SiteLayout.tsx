@@ -1,29 +1,21 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import ParticleField from "./ParticleField";
-import CursorGlow from "./CursorGlow";
 
 const SiteLayout = () => {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [pathname]);
+
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      <ParticleField />
-      <CursorGlow />
+    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground grain">
       <Navbar />
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={pathname}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10"
-        >
-          <Outlet />
-        </motion.main>
-      </AnimatePresence>
+      <main className="relative">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );

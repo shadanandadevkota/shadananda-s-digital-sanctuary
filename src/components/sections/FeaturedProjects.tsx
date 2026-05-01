@@ -1,91 +1,73 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import Reveal from "../Reveal";
-import TiltCard from "../TiltCard";
+import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/portfolio";
-
-const accentMap: Record<string, string> = {
-  primary: "from-primary/30 via-primary/10",
-  secondary: "from-secondary/30 via-secondary/10",
-  accent: "from-accent/30 via-accent/10",
-};
+import Paren from "@/components/Paren";
+import Reveal from "@/components/Reveal";
 
 const FeaturedProjects = () => {
-  const featured = projects.filter((p) => p.featured).slice(0, 4);
+  const featured = projects.filter((p) => p.featured);
+
   return (
-    <section className="container relative py-24 sm:py-32">
-      <Reveal>
-        <div className="flex flex-wrap items-end justify-between gap-6">
+    <section className="py-24 md:py-32 border-t border-foreground/15">
+      <div className="container-editorial">
+        <div className="flex items-end justify-between gap-6 mb-14 md:mb-20">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-secondary">
-              02 — Featured Work
-            </p>
-            <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-              <span className="text-gradient-soft">Selected</span>{" "}
-              <span className="text-gradient">projects.</span>
+            <Paren className="mb-6 inline-block">03 — Selected Work</Paren>
+            <h2 className="h-section text-balance">
+              Recent<br />
+              <span className="italic">projects</span>.
             </h2>
           </div>
-          <Link
-            to="/projects"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            View all
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          <Link to="/projects" className="hidden md:inline-flex items-center gap-2 text-sm border-b border-foreground pb-1 group">
+            All work
+            <ArrowUpRight className="size-4 arrow-shift" />
           </Link>
         </div>
-      </Reveal>
 
-      <div className="mt-14 grid gap-6 md:grid-cols-2">
-        {featured.map((p, i) => (
-          <Reveal key={p.slug} delay={i * 0.08}>
-            <TiltCard className="h-full">
-              <Link
-                to={`/projects/${p.slug}`}
-                className="glass glow-border group relative block h-full overflow-hidden rounded-3xl p-6 transition-shadow hover:shadow-elegant"
-              >
-                {/* gradient cover */}
-                <div className="relative mb-6 h-48 overflow-hidden rounded-2xl border border-border/40">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${accentMap[p.accent]} to-transparent`}
-                  />
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="font-display text-6xl font-bold text-gradient opacity-30">
-                      {p.title.split(" ")[0]}
+        <div className="space-y-20 md:space-y-32">
+          {featured.map((p, i) => {
+            const reverse = i % 2 === 1;
+            const num = String(i + 1).padStart(2, "0");
+            return (
+              <Reveal key={p.slug}>
+                <Link
+                  to={`/projects/${p.slug}`}
+                  className="group grid md:grid-cols-12 gap-6 md:gap-10 items-end"
+                >
+                  <div className={`md:col-span-7 ${reverse ? "md:order-2 md:col-start-6" : ""}`}>
+                    <div className="img-zoom overflow-hidden rounded-sm bg-muted">
+                      <img
+                        src={p.cover}
+                        loading="lazy"
+                        alt={`${p.title} — cover`}
+                        className="w-full h-[44vw] md:h-[36vw] max-h-[640px] object-cover"
+                      />
                     </div>
                   </div>
-                  <div className="absolute right-3 top-3 glass rounded-full px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
-                    {p.category}
-                  </div>
-                </div>
-
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-display text-xl font-semibold leading-tight transition-colors group-hover:text-gradient">
+                  <div className={`md:col-span-4 ${reverse ? "md:order-1 md:col-start-2" : ""}`}>
+                    <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
+                      ( {num} ) — {p.category} · {p.year}
+                    </p>
+                    <h3 className="font-display font-light text-4xl md:text-5xl leading-none tracking-tight mb-3">
                       {p.title}
                     </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{p.tagline}</p>
-                  </div>
-                  <ArrowUpRight
-                    size={20}
-                    className="shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
-                  />
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {p.tech.slice(0, 4).map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-border/60 bg-muted/30 px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground"
-                    >
-                      {t}
+                    <p className="text-foreground/70 text-base mb-5 max-w-md">{p.tagline}</p>
+                    <span className="inline-flex items-center gap-2 text-sm border-b border-foreground pb-0.5">
+                      View case
+                      <ArrowUpRight className="size-4 arrow-shift" />
                     </span>
-                  ))}
-                </div>
-              </Link>
-            </TiltCard>
-          </Reveal>
-        ))}
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        <div className="mt-16 md:hidden text-center">
+          <Link to="/projects" className="inline-flex items-center gap-2 text-sm border-b border-foreground pb-1">
+            View all work <ArrowUpRight className="size-4" />
+          </Link>
+        </div>
       </div>
     </section>
   );
