@@ -2,9 +2,17 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { toast } from "sonner";
 import Paren from "@/components/Paren";
-import { profile } from "@/data/portfolio";
+import { useSettings } from "@/hooks/useSanity";
 
 const Contact = () => {
+  const { data: s } = useSettings();
+  const profile = {
+    email: s?.email ?? "hello@shadananda.dev",
+    github: s?.github ?? "https://github.com/shadananda",
+    linkedin: s?.linkedin ?? "https://linkedin.com/in/shadananda",
+    twitter: s?.twitter ?? "https://twitter.com/shadananda",
+    location: s?.location ?? "Kathmandu, Nepal",
+  };
   const [form, setForm] = useState({ name: "", email: "", company: "", budget: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 

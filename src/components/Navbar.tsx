@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -16,7 +16,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,50 +29,65 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 inset-x-0 z-50 transition-all duration-500",
-          scrolled ? "bg-background/85 backdrop-blur-md border-b border-border/60" : "bg-transparent"
-        )}
-      >
-        <div className="container-editorial flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="font-display text-xl md:text-2xl tracking-tight" aria-label="Shadananda Devkota — home">
+      {/* Top bar — wordmark + menu trigger */}
+      <header className="fixed top-0 inset-x-0 z-40 pointer-events-none">
+        <div className="container-editorial flex items-start justify-between pt-5 md:pt-7">
+          <Link
+            to="/"
+            className="pointer-events-auto font-display text-lg md:text-xl tracking-tight"
+            aria-label="Shadananda Devkota — home"
+          >
             <span className="opacity-50">(</span>&nbsp;Shadananda&nbsp;<span className="opacity-50">)</span>
           </Link>
-
-          <nav className="hidden md:flex items-center gap-8 text-sm">
-            {links.slice(1).map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                className={({ isActive }) =>
-                  cn(
-                    "relative py-1 transition-colors",
-                    isActive ? "text-foreground" : "text-foreground/60 hover:text-foreground"
-                  )
-                }
-              >
-                {({ isActive }) => (
-                  <span className="inline-flex items-center gap-1.5">
-                    {isActive && <span className="text-foreground/40">*</span>}
-                    {l.label}
-                  </span>
-                )}
-              </NavLink>
-            ))}
-          </nav>
-
           <button
             onClick={() => setOpen(true)}
-            className="inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest"
-            aria-label="Open menu"
+            className="pointer-events-auto md:hidden inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest border border-foreground/20 rounded-full px-4 py-2 bg-background/70 backdrop-blur"
           >
-            <span className="opacity-50">(</span> Menu <span className="opacity-50">)</span>
+            Menu
           </button>
         </div>
       </header>
 
-      {/* Fullscreen menu */}
+      {/* Floating pill nav — desktop */}
+      <nav
+        className={cn(
+          "hidden md:flex fixed left-1/2 -translate-x-1/2 z-40 top-5 transition-all duration-500",
+          scrolled ? "scale-[0.96]" : "scale-100"
+        )}
+        aria-label="Primary"
+      >
+        <ul className="flex items-center gap-1 rounded-full border border-foreground/15 bg-background/70 backdrop-blur-xl px-2 py-1.5 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)]">
+          {links.map((l) => (
+            <li key={l.to}>
+              <NavLink
+                to={l.to}
+                end={l.to === "/"}
+                className={({ isActive }) =>
+                  cn(
+                    "px-4 py-2 rounded-full text-[13px] font-mono uppercase tracking-[0.14em] transition-colors",
+                    isActive
+                      ? "bg-foreground text-background"
+                      : "text-foreground/70 hover:text-foreground hover:bg-foreground/[0.06]"
+                  )
+                }
+              >
+                {l.label}
+              </NavLink>
+            </li>
+          ))}
+          <li className="ml-1 pl-2 border-l border-foreground/15">
+            <Link
+              to="/contact"
+              className="px-3 py-2 rounded-full text-[13px] font-mono uppercase tracking-[0.14em] inline-flex items-center gap-1.5 text-foreground/70 hover:text-foreground"
+            >
+              <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Available
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
+      {/* Fullscreen menu (mobile + secondary) */}
       <div
         className={cn(
           "fixed inset-0 z-[60] bg-background transition-opacity duration-500",
@@ -95,11 +110,7 @@ const Navbar = () => {
           <ul className="md:col-span-8 space-y-2 md:space-y-3">
             {links.map((l, i) => (
               <li key={l.to} className="border-b border-foreground/15 pb-3 md:pb-4">
-                <NavLink
-                  to={l.to}
-                  onClick={() => setOpen(false)}
-                  className="group flex items-end justify-between gap-6"
-                >
+                <NavLink to={l.to} onClick={() => setOpen(false)} className="group flex items-end justify-between gap-6">
                   <span className="font-display font-light leading-none text-[clamp(2.5rem,8vw,7rem)] tracking-tight">
                     {l.label}
                   </span>
@@ -110,7 +121,6 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-
           <div className="md:col-span-4 flex flex-col justify-end gap-6 text-sm">
             <div>
               <p className="h-eyebrow mb-2">( Reach out )</p>
@@ -118,17 +128,9 @@ const Navbar = () => {
               <a href="https://github.com/shadananda" target="_blank" rel="noreferrer" className="editorial-link block py-1">GitHub</a>
               <a href="https://linkedin.com/in/shadananda" target="_blank" rel="noreferrer" className="editorial-link block py-1">LinkedIn</a>
             </div>
-            <div>
-              <p className="h-eyebrow mb-2">( Based in )</p>
-              <p>Kathmandu, Nepal — Working worldwide</p>
-            </div>
           </div>
         </div>
       </div>
-
-      {/* hidden trigger for menu icon on mobile */}
-      <span className="sr-only">{open ? "menu open" : "menu closed"}</span>
-      <Menu className="hidden" />
     </>
   );
 };

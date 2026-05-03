@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { useSettings } from "@/hooks/useSanity";
 
 const Footer = () => {
+  const { data: s } = useSettings();
+  const email = s?.email ?? "hello@shadananda.dev";
   const year = new Date().getFullYear();
   return (
     <footer className="ink-section mt-32">
@@ -14,10 +17,10 @@ const Footer = () => {
               <span className="italic opacity-80">Let&apos;s ship it.</span>
             </h2>
             <a
-              href="mailto:hello@shadananda.dev"
+              href={`mailto:${email}`}
               className="group mt-10 inline-flex items-center gap-3 text-lg md:text-xl border-b border-current pb-1"
             >
-              hello@shadananda.dev
+              {email}
               <ArrowUpRight className="size-5 arrow-shift" />
             </a>
           </div>

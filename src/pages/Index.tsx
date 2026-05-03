@@ -6,16 +6,19 @@ import CertificatesPreview from "@/components/sections/CertificatesPreview";
 import ServicesOverview from "@/components/sections/ServicesOverview";
 import CallToAction from "@/components/sections/CallToAction";
 import { useEffect } from "react";
+import { useSettings } from "@/hooks/useSanity";
 
 const Index = () => {
+  const { data: s } = useSettings();
   useEffect(() => {
-    document.title = "Shadananda Devkota — Full-Stack Developer & UI/UX Designer";
+    const title = s?.seoTitle ?? "Shadananda Devkota — Full-Stack Developer & UI/UX Designer";
+    document.title = title;
     const meta = document.querySelector('meta[name="description"]');
     meta?.setAttribute(
       "content",
-      "Portfolio of Shadananda Devkota — full-stack web & mobile developer, UI/UX designer, and freelancer crafting modern digital experiences."
+      s?.seoDescription ?? "Portfolio of Shadananda Devkota — full-stack web & mobile developer, UI/UX designer, and freelancer crafting modern digital experiences."
     );
-  }, []);
+  }, [s]);
 
   return (
     <>
