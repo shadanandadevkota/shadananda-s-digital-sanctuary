@@ -1,16 +1,26 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import portrait from "@/assets/shadananda.jpg";
-import { profile } from "@/data/portfolio";
 import Paren from "@/components/Paren";
+import Marquee from "@/components/Marquee";
+import SanityImage from "@/components/SanityImage";
+import { useSettings } from "@/hooks/useSanity";
 
 const Hero = () => {
+  const { data: s } = useSettings();
+  const location = s?.location ?? "Kathmandu, Nepal";
+  const tagline = s?.tagline ?? "Quietly premium digital products, built end-to-end.";
+  const marquee = s?.marquee ?? [
+    "Full-Stack", "UI/UX", "Mobile", "Design Systems", "Performance",
+    "Available for select projects — 2026",
+  ];
+
   return (
-    <section className="relative pt-32 md:pt-40 pb-16 md:pb-24">
+    <section className="relative pt-32 md:pt-40 pb-12 md:pb-16">
       <div className="container-editorial">
         <div className="flex items-start justify-between gap-6 mb-10 md:mb-16">
           <Paren>01 — Index / Introducing</Paren>
-          <Paren className="hidden md:inline">{profile.location}</Paren>
+          <Paren className="hidden md:inline">{location}</Paren>
         </div>
 
         <h1 className="h-display text-balance">
@@ -21,25 +31,25 @@ const Hero = () => {
 
         <div className="mt-12 md:mt-20 grid md:grid-cols-12 gap-8 md:gap-12 items-end">
           <div className="md:col-span-5">
-            <div className="overflow-hidden img-zoom rounded-sm">
-              <img
-                src={portrait}
+            <div className="overflow-hidden img-zoom rounded-sm bg-muted aspect-[4/5]">
+              <SanityImage
+                image={s?.portrait}
+                fallback={portrait}
+                alt={`Portrait of ${s?.name ?? "Shadananda Devkota"}`}
                 width={1024}
                 height={1280}
-                alt="Portrait of Shadananda Devkota"
-                className="w-full h-auto block"
+                className="w-full h-full object-cover block"
+                loading="eager"
               />
             </div>
             <p className="mt-4 text-xs font-mono uppercase tracking-widest text-muted-foreground">
-              ( 01 ) — Shadananda Devkota
+              ( 01 ) — {s?.name ?? "Shadananda Devkota"}
             </p>
           </div>
 
           <div className="md:col-span-6 md:col-start-7 md:pb-2">
             <p className="font-display text-2xl md:text-3xl leading-snug font-light text-balance">
-              I&apos;m a full-stack developer and product designer crafting
-              <span className="italic"> calm, fast, premium </span>
-              digital experiences for founders and studios worldwide.
+              {tagline}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -53,6 +63,10 @@ const Hero = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-16 md:mt-24">
+        <Marquee items={marquee} />
       </div>
     </section>
   );
