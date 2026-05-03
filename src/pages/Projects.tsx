@@ -1,11 +1,22 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/data/portfolio";
 import Paren from "@/components/Paren";
 import Reveal from "@/components/Reveal";
+import SanityImage from "@/components/SanityImage";
+import { useProjects } from "@/hooks/useSanity";
+
+const FALLBACKS = [
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80",
+  "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1600&q=80",
+  "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1600&q=80",
+  "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1600&q=80",
+  "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=1600&q=80",
+  "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=1600&q=80",
+];
 
 const Projects = () => {
+  const { data: projects = [] } = useProjects();
   useEffect(() => {
     document.title = "Work — Shadananda Devkota";
   }, []);
@@ -24,21 +35,22 @@ const Projects = () => {
         </h1>
 
         <div className="mt-20 md:mt-28 grid md:grid-cols-2 gap-10 md:gap-16">
-          {projects.map((p, i) => (
-            <Reveal key={p.slug} delay={(i % 2) * 0.05}>
+          {projects.map((p: any, i: number) => (
+            <Reveal key={p._id} delay={(i % 2) * 0.05}>
               <Link to={`/projects/${p.slug}`} className="group block">
                 <div className="img-zoom overflow-hidden rounded-sm bg-muted">
-                  <img
-                    src={p.cover}
+                  <SanityImage
+                    image={p.cover}
+                    fallback={FALLBACKS[i % FALLBACKS.length]}
                     alt={p.title}
-                    loading="lazy"
+                    width={1600}
                     className="w-full aspect-[4/3] object-cover"
                   />
                 </div>
                 <div className="mt-5 flex items-start justify-between gap-4">
                   <div>
                     <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">
-                      ( {String(i + 1).padStart(2, "0")} ) {p.category} · {p.year}
+                      ( {String(i + 1).padStart(2, "0")} ) {p.role ?? "Project"} · {p.year}
                     </p>
                     <h2 className="font-display text-3xl md:text-4xl font-light leading-none tracking-tight">{p.title}</h2>
                     <p className="mt-2 text-foreground/70">{p.tagline}</p>

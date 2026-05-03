@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { experience } from "@/data/portfolio";
 import Paren from "@/components/Paren";
 import Reveal from "@/components/Reveal";
+import { useExperience } from "@/hooks/useSanity";
 
 const ExperienceSnapshot = () => {
+  const { data: experience = [] } = useExperience();
+
   return (
     <section className="py-24 md:py-32 border-t border-foreground/15">
       <div className="container-editorial">
@@ -21,8 +23,8 @@ const ExperienceSnapshot = () => {
         </div>
 
         <ul className="divide-y divide-foreground/15 border-y border-foreground/15">
-          {experience.map((e, i) => (
-            <Reveal key={i} delay={i * 0.04}>
+          {experience.map((e: any, i: number) => (
+            <Reveal key={e._id} delay={i * 0.04}>
               <li className="grid md:grid-cols-12 gap-4 md:gap-8 py-8 md:py-10">
                 <span className="md:col-span-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">
                   ( 0{i + 1} ) {e.period}
@@ -36,7 +38,7 @@ const ExperienceSnapshot = () => {
                   </p>
                 </div>
                 <p className="md:col-span-4 text-foreground/70 text-base self-center">
-                  {e.summary}
+                  {e.bullets?.[0]}
                 </p>
               </li>
             </Reveal>

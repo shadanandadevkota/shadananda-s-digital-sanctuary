@@ -1,18 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { services } from "@/data/portfolio";
 import Paren from "@/components/Paren";
 import Reveal from "@/components/Reveal";
-
-const process = [
-  { title: "Discover", body: "We start with a short, focused conversation. I want to understand your audience, your constraints, and what 'done' looks like for you." },
-  { title: "Design", body: "Wireframes and a tight Figma prototype before a single line of production code. We agree on the system, then build inside it." },
-  { title: "Build", body: "Iterative shipping in week-long slices. You see real, deployed progress every Friday — not screenshots in a deck." },
-  { title: "Polish & Ship", body: "Performance pass, accessibility audit, SEO and analytics. We launch quietly, measure, and refine." },
-];
+import { useServices, useProcess } from "@/hooks/useSanity";
 
 const Services = () => {
+  const { data: services = [] } = useServices();
+  const { data: process = [] } = useProcess();
+
   useEffect(() => {
     document.title = "Services — Shadananda Devkota";
   }, []);
@@ -22,7 +18,7 @@ const Services = () => {
       <div className="container-editorial">
         <div className="flex items-start justify-between mb-10 md:mb-16">
           <Paren>Services — What I do</Paren>
-          <Paren className="hidden md:inline">Available — Q3 2026</Paren>
+          <Paren className="hidden md:inline">Available — 2026</Paren>
         </div>
 
         <h1 className="h-display text-balance">
@@ -36,37 +32,36 @@ const Services = () => {
           quiet glue that holds a product together.
         </p>
 
-        {/* Services list */}
         <ul className="mt-24 divide-y divide-foreground/15 border-y border-foreground/15">
-          {services.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <Reveal key={s.title} delay={i * 0.04}>
-                <li className="grid md:grid-cols-12 gap-4 md:gap-10 py-10 md:py-14">
-                  <span className="md:col-span-1 text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                    ( 0{i + 1} )
-                  </span>
-                  <div className="md:col-span-4 flex items-start gap-4">
-                    <Icon className="size-5 mt-3 text-foreground/60" strokeWidth={1.5} />
-                    <h2 className="font-display text-4xl md:text-5xl font-light leading-none tracking-tight">{s.title}</h2>
-                  </div>
-                  <div className="md:col-span-7">
-                    <p className="text-foreground/80 text-lg max-w-xl">{s.description}</p>
+          {services.map((s: any, i: number) => (
+            <Reveal key={s._id} delay={i * 0.04}>
+              <li className="grid md:grid-cols-12 gap-4 md:gap-10 py-10 md:py-14">
+                <span className="md:col-span-1 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  ( 0{i + 1} )
+                </span>
+                <div className="md:col-span-4">
+                  <h2 className="font-display text-4xl md:text-5xl font-light leading-none tracking-tight">{s.title}</h2>
+                  {s.startingAt && (
+                    <p className="mt-3 text-xs font-mono uppercase tracking-widest text-muted-foreground">From {s.startingAt}</p>
+                  )}
+                </div>
+                <div className="md:col-span-7">
+                  <p className="text-foreground/80 text-lg max-w-xl">{s.summary}</p>
+                  {s.deliverables?.length ? (
                     <ul className="mt-6 grid sm:grid-cols-2 gap-x-6 gap-y-2">
-                      {s.deliverables.map((d) => (
+                      {s.deliverables.map((d: string) => (
                         <li key={d} className="text-sm text-foreground/70 flex items-center gap-2">
                           <span className="text-foreground/30">—</span> {d}
                         </li>
                       ))}
                     </ul>
-                  </div>
-                </li>
-              </Reveal>
-            );
-          })}
+                  ) : null}
+                </div>
+              </li>
+            </Reveal>
+          ))}
         </ul>
 
-        {/* Process */}
         <section className="mt-32">
           <div className="grid md:grid-cols-12 gap-10 mb-14">
             <div className="md:col-span-4">
@@ -80,8 +75,8 @@ const Services = () => {
             </div>
           </div>
           <div className="grid md:grid-cols-4 gap-8">
-            {process.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.05}>
+            {process.map((p: any, i: number) => (
+              <Reveal key={p._id} delay={i * 0.05}>
                 <div className="border-t border-foreground/30 pt-5">
                   <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">( 0{i + 1} )</p>
                   <h3 className="mt-3 font-display text-3xl font-light leading-none tracking-tight">{p.title}</h3>
@@ -92,7 +87,6 @@ const Services = () => {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="mt-32 border-t border-foreground/15 pt-12">
           <h2 className="h-section text-balance">
             Have something<br />

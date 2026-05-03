@@ -1,10 +1,23 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { certificates } from "@/data/portfolio";
 import Paren from "@/components/Paren";
 import Reveal from "@/components/Reveal";
+import { useCertificates } from "@/hooks/useSanity";
 
 const CertificatesPreview = () => {
+  const { data: certs = [] } = useCertificates();
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, any[]>();
+    for (const c of certs) {
+      const k = c.group ?? "Other";
+      if (!map.has(k)) map.set(k, []);
+      map.get(k)!.push(c);
+    }
+    return Array.from(map.entries());
+  }, [certs]);
+
   return (
     <section className="py-24 md:py-32 border-t border-foreground/15">
       <div className="container-editorial">
@@ -21,15 +34,15 @@ const CertificatesPreview = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-10">
-          {certificates.map((g, gi) => (
-            <Reveal key={g.group} delay={gi * 0.05}>
+          {grouped.map(([group, items], gi) => (
+            <Reveal key={group} delay={gi * 0.05}>
               <div className="border-t border-foreground/30 pt-5">
                 <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-6">
-                  ( 0{gi + 1} ) {g.group}
+                  ( 0{gi + 1} ) {group}
                 </p>
                 <ul className="space-y-4">
-                  {g.items.map((it) => (
-                    <li key={it.title} className="flex items-baseline justify-between gap-4 border-b border-foreground/10 pb-3">
+                  {items.map((it: any) => (
+                    <li key={it._id} className="flex items-baseline justify-between gap-4 border-b border-foreground/10 pb-3">
                       <span className="font-display text-lg">{it.title}</span>
                       <span className="text-xs font-mono text-muted-foreground">{it.year}</span>
                     </li>
